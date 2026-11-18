@@ -145,6 +145,13 @@ class SearchRequest(BaseModel):
     model: Literal["bm25", "tfidf"] = "bm25"
     top_k: int = Field(10, ge=1, le=100)
 
+@app.get("/")
+def root():
+    return {
+        "service": "ICCD753 IR Service - NFCorpus",
+        "endpoints": {"health": "/health", "search": "/search", "docs": "/docs"}
+    }
+
 @app.get("/health")
 def health():
     return {"status": "ok", "corpus": "BeIR/nfcorpus", "indexed_documents": index.num_docs}
